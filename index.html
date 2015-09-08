@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<script type="text/javascript">
+			/*
+			闭包之一
+			 */
+			function addPrivateProperty(o, name, predicate){
+				var value;
+				o["get" + name] = function(){return value;};
+				o["set" + name] = function(v){
+					if(predicate && !predicate(v))
+						throw Error("set" + name + ": invalid value " + v);
+					else
+						value = v;
+				};
+			}
+			function addPrivateProperty1(name){
+				var value;
+				value = (typeof name == "string") && name;
+				return value;
+			}
+			var o = {};
+			addPrivateProperty(o, "Name", function(x){return typeof x == "string";});
+			o.setName("Frank");
+			console.log(o.getName());
+			console.log(addPrivateProperty1("Katie"));
+
+			/*
+			闭包之二
+			 */
+			function constfuncs(){
+				var funcs = [];
+				for(var i = 0; i < 10; i++){
+					funcs[i] = function() {return i;};
+					console.log(funcs[i]());
+				}
+				return funcs;
+			}
+			var funcs = constfuncs();
+			funcs.forEach(function(x){console.log(x())});
+			funcs[0]();
+			funcs[5]();
+
+			/*
+			函数属性、方法和构造函数
+			 */
+			function check(args){
+				var actual = args.length;
+				var expected = args.callee.length;
+				console.log(args.callee);
+				console.log(expected);
+				if(actual !== expected){
+					throw Error("Expected " + expected + "args; got " + actual);
+				}
+			}
+			function funcs1(x, y, z){
+				check(arguments);
+				return (x + y + z);
+			}
+			console.log(funcs1(1, 3, 4));
+
+			/*
+			bind()之一
+			 */
+			function func1(y){
+				console.log(this);
+				return this.x + y;
+			}
+			var o = {x: 1};
+			var g = func1.bind(o);
+			console.log(g(2));
+
+			/*
+			bind()之二
+			*/
+			var sum = function(x,y){return (x+y);};
+			var succ = sum.bind(this);
+			console.log(sum(1,4));
+			console.log(succ);
+
+
+	</script>
+</head>
+<body>
+	
+</body>
+</html>

@@ -1,0 +1,20 @@
+闭包——closure
+闭包是可以包含自由（未绑定到特定对象）变量的代码块；这些变量不是在这个代码块内或者任何全局上下文中定义的，而是在定义代码块的环境中定义（局部变量）。“闭包”一词来源于以下两者的结合：要执行的代码块（由于自由变量被包含在代码块中，这些自由变量以及它们引用的对象没有被释放）和为自由变量提供绑定的计算环境（作用域）。在Scala、Scheme、Common Lisp、Smalltalk、Groovy、JavaScript、Ruby、Python、Go、Lua、Object c以及Java（Java8及以上）等语言中都能找到对闭包不同程度的支持。
+
+函数嵌套函数，内部函数可以引用外部函数的参数和变量，参数和变量不会被垃圾回收机制所收回。
+
+同一个函数中调用定义的闭包会共享变量，关联到闭包的作用域链都是活动的。嵌套的函数不会将作用域内的私有成员复制一份，也不会对所绑定的变量生成静态快照。
+
+闭包中的this是JavaScript的关键字，而不是变量；每个函数调用的时候都包含一个this值，如果闭包在外部函数里是无法访问this的；
+严格讲，闭包内的逻辑是可以使用this的，但这个this和当初定义函数时的this不是同一个，即便是同一个this，this的值是随着调用栈的变化而变化的，而闭包里的逻辑所取代的this的值也是不确定的。
+关键字this没有作用域的限制，嵌套的函数不会从调用它的函数中继承this
+
+作用域、作用域链、调用对象、调用栈
+
+abcdefghijklmnopqrstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+abcdefghijklmnopqrstuvwxyz
+abcdefghijklmnopqrstuvwxyz
